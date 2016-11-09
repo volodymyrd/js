@@ -1,16 +1,34 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <script>
-      /*
-      window.Polymer = window.Polymer || {};
-      window.Polymer.dom = 'shadow';
-      */
+        /*
+         window.Polymer = window.Polymer || {};
+         window.Polymer.dom = 'shadow';
+         */
     </script>
     <link rel="import" href="icon-toggle-demo.html">
-  </head>
-  <body>
-    <icon-toggle-demo></icon-toggle-demo>
-  </body>
+
+    <style is="custom-style">
+        /* Define a document-wide default—will not override a :host rule in icon-toggle-demo */
+        :root {
+            --icon-toggle-outline-color: red;
+            --icon-toggle-color: purple;
+        }
+
+        /* Override the value specified in icon-toggle-demo */
+        icon-toggle-demo {
+            --icon-toggle-pressed-color: green;
+        }
+
+        /* This rule does not work! */
+        body {
+            --icon-toggle-color: purple;
+        }
+    </style>
+</head>
+<body>
+<icon-toggle-demo></icon-toggle-demo>
+</body>
 </html>
