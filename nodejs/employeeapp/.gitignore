@@ -1,0 +1,16 @@
+*/.settings/*
+*/.classpath
+*/.project
+*/target/*
+.gradle
+*/build/*
+*/bin/*
+*/.gitignore
+classes/
+*.log
+.DS_Store
+/release/*
+/tests/*
+.idea/
+node_modules/
+package.json
