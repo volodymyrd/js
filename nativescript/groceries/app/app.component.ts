@@ -3,9 +3,10 @@ import { Component } from "@angular/core";
 @Component({
     selector: "my-app",
     templateUrl: "app.component.html",
+    styleUrls: ["pages/login/login-common.css", "pages/login/login.css"]
 })
 export class AppComponent {
-    public counter: number = 16;
+    public counter: number = 2;
 
     public get message(): string {
         if (this.counter > 0) {

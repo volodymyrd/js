@@ -1,5 +1,16 @@
-<StackLayout class="p-20">
-    <Label text="Tap the button" class="h1 text-center"></Label>
-    <Button text="TAP" (tap)="onTap()" class="btn btn-primary btn-active"></Button>
-    <Label [text]="message" class="h2 text-center" textWrap="true"></Label>
+<!--<StackLayout class="p-20">-->
+<!--<Label text="Tap the button" class="h1 text-center"></Label>-->
+<!--<Button text="TAP" (tap)="onTap()" class="btn btn-primary btn-active"></Button>-->
+<!--<Label [text]="message" class="h2 text-center" textWrap="true"></Label>-->
+<!--</StackLayout>-->
+
+<StackLayout>
+    <Image src="res://add" stretch="none" horizontalAlignment="center"></Image>
+
+    <TextField hint="Email Address" keyboardType="email"
+               autocorrect="false" autocapitalizationType="none"></TextField>
+    <TextField hint="Password" secure="true"></TextField>
+
+    <Button text="Sign in" class="submit-button"></Button>
+    <Button text="Sign up for Groceries"></Button>
 </StackLayout>
