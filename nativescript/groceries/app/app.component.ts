@@ -6,17 +6,13 @@ import { Component } from "@angular/core";
     styleUrls: ["pages/login/login-common.css", "pages/login/login.css"]
 })
 export class AppComponent {
-    public counter: number = 2;
+    email = "nativescriptrocks@telerik.com";
+    isLoggingIn = true;
 
-    public get message(): string {
-        if (this.counter > 0) {
-            return this.counter + " taps left";
-        } else {
-            return "Hoorraaay! \nYou are ready to start building!";
-        }
+    submit() {
+        alert("You’re using: " + this.email);
     }
-    
-    public onTap() {
-        this.counter--;
+    toggleDisplay() {
+        this.isLoggingIn = !this.isLoggingIn;
     }
 }
