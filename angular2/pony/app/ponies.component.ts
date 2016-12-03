@@ -1,20 +1,19 @@
 import {Component} from "@angular/core";
+import {Pony} from "./model/pony";
 
 @Component({
     selector: 'ns-ponies',
-    template: `
-        <ul>
-            {{ponies|json}}
-            <button (click)="refreshPonies()">Refresh</button>
-            <li *ngFor="let pony of ponies; let isEven=even" [style.color]="isEven?'green':'black'">
-            {{pony.name}}</li>
-        </ul>
+    template: `<div>
+    <h2>Ponies</h2>
+    <!--[pony]="currentPony"-->
+    <ns-pony *ngFor="let currentPony of ponies" [pony]="currentPony" (ponySelected)="betOnPony($event)"></ns-pony>
+    </div>
     `
 })
 export class PoniesComponent {
-    ponies: Array<any> = [{name: 'Rainbow Dash'}, {name: 'Pinkie Pie'}];
+    ponies: Array<Pony> = [{id: 1, name: 'Rainbow Dash'}, {id: 2, name: 'Pinkie Pie'}, {id: 3, name: 'Fluttershy'}];
 
-    refreshPonies() {
-        this.ponies = [{name: 'Fluttershy'}, {name: 'Rarity'}];
+    betOnPony(pony) {
+        console.log(pony);
     }
 }

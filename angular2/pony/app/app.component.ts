@@ -1,8 +1,10 @@
 import {Component} from "@angular/core";
 import {RaceService} from "./services/race.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'ponyracer-app',
+    viewProviders: [Title],
     template: `
       <h1>PonyRacer</h1>
       <ns-races></ns-races>
@@ -14,8 +16,10 @@ import {RaceService} from "./services/race.service";
 })
 export class PonyRacerAppComponent {
 
-    constructor(private raceService: RaceService) {
+    constructor(title: Title, private raceService: RaceService) {
         console.log('raceService:' + raceService);
+
+        title.setTitle('PonyRacer - Bet on ponies');
     }
 
     list() {

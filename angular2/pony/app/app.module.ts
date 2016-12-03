@@ -6,12 +6,12 @@ import {PoniesComponent} from "./ponies.component";
 import {ApiService} from "./services/api.service";
 import {RaceService} from "./services/race.service";
 import {MockRaceService} from "./services/mock/mock.race.service";
+import {PonyComponent} from "./pony.component";
 
 @NgModule({
     imports: [BrowserModule],
-    declarations: [PonyRacerAppComponent, RacesComponent, PoniesComponent],
+    declarations: [PonyRacerAppComponent, RacesComponent, PoniesComponent, PonyComponent],
     providers: [ApiService,
-
         {provide: RaceService, useClass: MockRaceService}
     ],
     bootstrap: [PonyRacerAppComponent]
