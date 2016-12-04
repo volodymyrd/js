@@ -1,5 +1,7 @@
 import {Component} from "@angular/core";
 import {FormGroup, FormControl, FormBuilder, Validators} from "@angular/forms";
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 @Component({
   selector: 'ns-register',
@@ -32,6 +34,13 @@ export class RegisterFormComponent {
       }
     );
 
+    // we subscribe to every password change
+    this.password.valueChanges
+    // only recompute when the user stops typing for 400ms
+      .debounceTime(400)
+      // only recompute if the new value is different than the last
+      .distinctUntilChanged()
+      .subscribe(newValue => this.passwordStrength = newValue.length);
   }
 
   static passwordMatch(control: FormGroup) {
