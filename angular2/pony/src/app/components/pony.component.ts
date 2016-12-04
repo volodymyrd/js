@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter, ViewEncapsulation} from "@angular/core";
-import {Pony} from "./model/pony";
+import {Pony} from "../model/pony";
 
 @Component({
     selector: 'ns-pony',

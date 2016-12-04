@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
-import {RaceService} from "./services/race.service";
 import {Title} from "@angular/platform-browser";
+import {RaceService} from "../services/race.service";
 
 @Component({
     selector: 'ponyracer-app',
