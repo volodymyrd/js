@@ -1,1 +1,23 @@
 <h2>Sign up</h2>
+<form (ngSubmit)="register()" [formGroup]="userFormGroup">
+  <label>Username</label>
+  <input formControlName="username">
+  <div *ngIf="username.dirty && username.hasError('required')">Username is required</div>
+
+  <div [formGroup]="passwordFormGroup">
+    <div>
+      <label>Password</label>
+      <input type="password" formControlName="password">
+      <div *ngIf="password.dirty && password.hasError('required')">Password is required</div>
+    </div>
+
+    <div>
+      <label>Confirm password</label>
+      <input type="password" formControlName="passwordConfirm">
+      <div *ngIf="passwordConfirm.dirty && passwordConfirm.hasError('required')">Confirm your password</div>
+    <div *ngIf="passwordFormGroup.dirty && passwordFormGroup.hasError('matchingError')">Your password does not match</div>
+  </div>
+  </div>
+
+  <button type="submit" [disabled]="!userFormGroup.valid">Register</button>
+</form>
