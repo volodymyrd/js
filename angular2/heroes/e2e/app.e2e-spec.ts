@@ -1,5 +1,7 @@
 import { HeroesPage } from './app.po';
 
+let title = "Tour of Heroes";
+
 describe('heroes App', function() {
   let page: HeroesPage;
 
@@ -7,8 +9,8 @@ describe('heroes App', function() {
     page = new HeroesPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should display message saying ' + title, () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getParagraphText()).toEqual(title);
   });
 });
