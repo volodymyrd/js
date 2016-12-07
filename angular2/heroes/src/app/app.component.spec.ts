@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
+import {HeroDetailComponent} from "./hero-detail.component";
 
 let title = "Tour of Heroes";
 
@@ -12,7 +13,7 @@ describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent, HeroDetailComponent
       ],
       imports: [
         BrowserModule,
