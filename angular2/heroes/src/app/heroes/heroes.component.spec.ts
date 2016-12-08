@@ -7,6 +7,7 @@ import {FormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {HeroDetailComponent} from "./hero-detail.component";
 import {HeroService} from "../services/hero.service";
+import {RouterTestingModule} from "@angular/router/testing";
 
 let title = "Tour of Heroes";
 let h2 = "My Heroes";
@@ -21,7 +22,10 @@ describe('HeroesComponent', () => {
       imports: [
         BrowserModule,
         FormsModule,
-        HttpModule
+        HttpModule,
+        [RouterTestingModule.withRoutes([
+          { path: '', component: HeroesComponent }
+        ])],
       ],
     });
   });
@@ -32,10 +36,10 @@ describe('HeroesComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it(`should have as title` + title, async(() => {
+  it(`should has element '.heroes'` + title, async(() => {
     let fixture = TestBed.createComponent(HeroesComponent);
-    let app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual(title);
+    let compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('.heroes')).toBeTruthy();
   }));
 
   it('should render text in a h2 tag', async(() => {
