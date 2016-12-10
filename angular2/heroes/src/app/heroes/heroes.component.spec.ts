@@ -2,15 +2,15 @@
 
 import {TestBed, async} from '@angular/core/testing';
 import {HeroesComponent} from './heroes.component';
-import {BrowserModule} from "@angular/platform-browser";
-import {FormsModule} from "@angular/forms";
-import {HttpModule} from "@angular/http";
-import {HeroDetailComponent} from "./hero-detail.component";
-import {HeroService} from "../services/hero.service";
-import {RouterTestingModule} from "@angular/router/testing";
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
+import {HeroDetailComponent} from './hero-detail.component';
+import {HeroService} from '../services/hero.service';
+import {RouterTestingModule} from '@angular/router/testing';
 
-let title = "Tour of Heroes";
-let h2 = "My Heroes";
+let title = 'Tour of Heroes';
+let h2 = 'My Heroes';
 
 describe('HeroesComponent', () => {
   beforeEach(() => {
@@ -24,7 +24,7 @@ describe('HeroesComponent', () => {
         FormsModule,
         HttpModule,
         [RouterTestingModule.withRoutes([
-          { path: '', component: HeroesComponent }
+          {path: '', component: HeroesComponent}
         ])],
       ],
     });
@@ -44,7 +44,7 @@ describe('HeroesComponent', () => {
 
   it('should render text in a h2 tag', async(() => {
     let fixture = TestBed.createComponent(HeroesComponent);
-    //fixture.detectChanges();
+    // fixture.detectChanges();
     let compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h2').textContent).toContain(h2);
   }));

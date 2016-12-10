@@ -1,6 +1,6 @@
-import {Injectable} from "@angular/core";
-import {Hero} from "../model/hero";
-import {Headers, Http} from "@angular/http";
+import {Injectable} from '@angular/core';
+import {Hero} from '../model/hero';
+import {Headers, Http} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
@@ -59,7 +59,7 @@ export class HeroService {
   }
 
   private handleError(error: any): Promise<any> {
-    console.error("An error occurred!", error);
+    console.error('An error occurred!', error);
 
     return Promise.reject(error.message || error);
   }

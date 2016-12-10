@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {HeroService} from "../services/hero.service";
-import {Hero} from "../model/hero";
-import {Router} from "@angular/router";
+import {HeroService} from '../services/hero.service';
+import {Hero} from '../model/hero';
+import {Router} from '@angular/router';
 
 
 @Component({
-  selector: 'my-heroes',
+  selector: 'app-heroes',
   templateUrl: './heroes.component.html',
   styleUrls: ['./heroes.component.css'],
 })
