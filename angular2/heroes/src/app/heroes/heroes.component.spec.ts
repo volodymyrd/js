@@ -36,7 +36,7 @@ describe('HeroesComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it(`should has element '.heroes'` + title, async(() => {
+  it(`should has element '.heroes'`, async(() => {
     let fixture = TestBed.createComponent(HeroesComponent);
     let compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('.heroes')).toBeTruthy();
@@ -44,7 +44,7 @@ describe('HeroesComponent', () => {
 
   it('should render text in a h2 tag', async(() => {
     let fixture = TestBed.createComponent(HeroesComponent);
-    fixture.detectChanges();
+    //fixture.detectChanges();
     let compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h2').textContent).toContain(h2);
   }));
