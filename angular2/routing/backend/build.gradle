@@ -1,0 +1,10 @@
+configurations {
+    providedRuntime
+}
+
+dependencies {
+    compile libs.spring_boot_security
+    compile libs.spring_boot_jpa
+    compile libs.spring_boot_mail
+    compile libs.database_hsqldb
+}

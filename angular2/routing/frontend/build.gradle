@@ -1,0 +1,35 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		mavenLocal()
+		maven { url "http://repo.spring.io/release" }
+		maven { url "http://repo.spring.io/milestone" }
+		maven { url "http://repo.spring.io/snapshot" }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${versions.spring_boot}")
+	}
+}
+
+apply plugin: 'spring-boot'
+
+apply plugin: 'war'
+war {
+	version =  '0.0.1'
+}
+
+dependencies {
+	compile project(":backend")
+	compile libs.javax
+	compile libs.spring_boot_web
+	compile libs.liquibase
+
+	testCompile libs.test
+
+	providedRuntime libs.tomcat_embed
+}
+
+springBoot {
+	mainClass = 'com.gmail.volodymyrdotsenko.routing.frontend.Application'
+}
+
