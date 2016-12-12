@@ -27,6 +27,10 @@ export class HeroListComponent implements OnInit {
               private heroService: HeroService) {
   }
 
+  onSelect(hero: Hero) {
+    this.router.navigate(['/hero', hero.id]);
+  }
+
   private getHeroes(): void {
     this.heroes = this.heroService.getHeroes()
       .catch(error => {
