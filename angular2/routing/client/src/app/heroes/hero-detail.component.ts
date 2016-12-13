@@ -1,4 +1,4 @@
-import {OnInit, Component} from '@angular/core';
+import {OnInit, Component, trigger, state, style, transition, animate, HostBinding} from '@angular/core';
 import {Hero} from '../model/hero';
 import {ActivatedRoute, Router, Params} from '@angular/router';
 import {HeroService} from './hero.service';
@@ -18,9 +18,44 @@ import {HeroService} from './hero.service';
       <button (click)="gotoHeroes()">Back</button>
     </p>
   </div>
-`
+`,
+  animations: [
+    trigger('routeAnimation', [
+      state('*',
+        style({
+          opacity: 1,
+          transform: 'translateX(0)'
+        })
+      ),
+      transition(':enter', [
+        style({
+          opacity: 0,
+          transform: 'translateX(-100%)'
+        }),
+        animate('0.2s ease-in')
+      ]),
+      transition(':leave', [
+        animate('0.5s ease-out', style({
+          opacity: 0,
+          transform: 'translateY(100%)'
+        }))
+      ])
+    ])
+  ]
 })
 export class HeroDetailComponent implements OnInit {
+
+  @HostBinding('@routeAnimation') get routeAnimation() {
+    return true;
+  }
+
+  @HostBinding('style.display') get display() {
+    return 'block';
+  }
+
+  @HostBinding('style.position') get position() {
+    return 'absolute';
+  }
 
   hero: Hero;
 
@@ -40,7 +75,7 @@ export class HeroDetailComponent implements OnInit {
     let heroId = this.hero ? this.hero.id : null;
     // Pass along the hero id if available
     // so that the HeroList component can select that hero.
-    this.router.navigate(['/heroes', { id: heroId, foo: 'foo' }]);
+    this.router.navigate(['/heroes', {id: heroId, foo: 'foo'}]);
   }
 
 }
