@@ -6,10 +6,14 @@ import {HttpModule} from '@angular/http';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HeroesModule} from './heroes/heroes.module';
+import {AdminModule} from './admin/admin.module';
+import {LoginRoutingModule} from './login-routing.module';
+import {LoginComponent} from './login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -17,6 +21,8 @@ import {HeroesModule} from './heroes/heroes.module';
     HttpModule,
     AppRoutingModule,
     HeroesModule,
+    AdminModule,
+    LoginRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

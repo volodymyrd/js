@@ -7,6 +7,11 @@ const appRoutes: Routes = [
     redirectTo: '/heroes',
     pathMatch: 'full'
   },
+  {
+    path: 'admin',
+    redirectTo: 'admin',
+    //canLoad: [AuthGuard]
+  },
 ];
 
 @NgModule({
