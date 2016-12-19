@@ -11,7 +11,7 @@ buildscript {
 	}
 }
 
-apply plugin: 'spring-boot'
+apply plugin: 'org.springframework.boot'
 
 apply plugin: 'war'
 war {
@@ -22,11 +22,13 @@ dependencies {
 	compile project(":backend")
 	compile libs.javax
 	compile libs.spring_boot_web
-	compile libs.liquibase
+	//compile libs.liquibase
+
+	//compile libs.tomcat_embed
 
 	testCompile libs.test
 
-	providedRuntime libs.tomcat_embed
+	//providedRuntime libs.tomcat_embed
 }
 
 springBoot {
