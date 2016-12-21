@@ -1,5 +1,6 @@
 import {NgModule}             from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {AuthGuard} from './auth-guard.service';
 
 const appRoutes: Routes = [
   {
@@ -10,7 +11,7 @@ const appRoutes: Routes = [
   {
     path: 'admin',
     redirectTo: 'admin',
-    //canLoad: [AuthGuard]
+    canLoad: [AuthGuard]
   },
 ];
 
