@@ -2,3 +2,6 @@
 .idea/
 backend/target/
 frontend/target/
+.gradle/
+classes/
+
