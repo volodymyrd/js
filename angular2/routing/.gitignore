@@ -4,4 +4,4 @@ backend/target/
 frontend/target/
 .gradle/
 classes/
-
+frontend/src/main/resources/static/
