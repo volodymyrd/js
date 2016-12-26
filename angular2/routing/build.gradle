@@ -3,14 +3,15 @@ defaultTasks 'clean', 'build'
 subprojects {
     ext {
         versions = [
-            junit: '4.12',
-            jstl: '1.2',
-            spring_boot: '1.4.2.RELEASE',
-            hibernate_validator: '5.3.3.Final',
-            hibernate_ehcache: '5.0.11.Final',
-            hsqldb: '2.3.4',
-            mysql: '6.0.5',
-            liquibase: '3.5.3'
+                junit              : '4.12',
+                jstl               : '1.2',
+                spring_boot        : '1.4.2.RELEASE',
+                hibernate_validator: '5.3.3.Final',
+                hibernate_ehcache  : '5.0.11.Final',
+                hsqldb             : '2.3.4',
+                mysql              : '6.0.5',
+                liquibase          : '3.5.3',
+                json               : '2.8.5'
         ]
 
         libs = [:]
@@ -20,8 +21,8 @@ subprojects {
         libs.spring_boot_web = ["org.springframework.boot:spring-boot-starter-web:${versions.spring_boot}"]
 
         libs.spring_boot_jpa = ["org.springframework.boot:spring-boot-starter-data-jpa:${versions.spring_boot}",
-        						"org.hibernate:hibernate-validator:${versions.hibernate_validator}",
-        						"org.hibernate:hibernate-ehcache:${versions.hibernate_ehcache}"]
+                                "org.hibernate:hibernate-validator:${versions.hibernate_validator}",
+                                "org.hibernate:hibernate-ehcache:${versions.hibernate_ehcache}"]
 
         libs.spring_boot_security = "org.springframework.boot:spring-boot-starter-security:${versions.spring_boot}"
 
@@ -37,7 +38,11 @@ subprojects {
                      "org.springframework.boot:spring-boot-starter-test:${versions.spring_boot}"]
 
         libs.tomcat_embed = ["org.springframework.boot:spring-boot-starter-tomcat:${versions.spring_boot}",
-        		                     "org.apache.tomcat.embed:tomcat-embed-jasper"]
+                             "org.apache.tomcat.embed:tomcat-embed-jasper"]
+
+        libs.json = ["com.fasterxml.jackson.core:jackson-core:${versions.json}",
+                     "com.fasterxml.jackson.core:jackson-annotations:${versions.json}",
+                     "com.fasterxml.jackson.core:jackson-databind:${versions.json}"]
     }
 
     // Configuring java
@@ -62,7 +67,7 @@ subprojects {
     }
 
     task wrapper(type: Wrapper) {
-	    gradleVersion = '2.10'
+        gradleVersion = '2.10'
     }
 
     buildDir = 'target'

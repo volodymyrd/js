@@ -1,45 +1,91 @@
 import {Injectable} from '@angular/core';
-import {Headers, Http} from '@angular/http';
+import {Headers, Http, Response} from '@angular/http';
 import {Observable} from 'rxjs';
+import 'rxjs/Rx';
+import {HttpClient} from './http-client';
+import {Profile} from '../model/user-profile';
 
 @Injectable()
 export class AuthService {
-  private loggedIn: boolean = false;
+  private token: string;
 
-  constructor(private http: Http) {
-    //this.loggedIn = !!localStorage.getItem('auth_token');
+  constructor(private http: Http, private httpClient: HttpClient) {
+    console.log('constructor AuthService');
   }
 
   // store the URL so we can redirect after logging in
   redirectUrl: string;
 
-  login(userName: string, password: string): Observable<boolean> {
+  login(username: string, password: string): Observable<Response> {
     let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
+    headers.append('Authorization', 'Basic ' +
+      btoa(username + ':' + password));
 
-    return this.http
-      .post(
-        '/login',
-        JSON.stringify({userName, password}),
-        {headers}
-      )
-      .map(res => res.json())
-      .map((res) => {
-        if (res.success) {
-          localStorage.setItem('auth_token', res.auth_token);
-          this.loggedIn = true;
-        }
+    return this.http.post('/auth/signin', {}, {
+      headers: headers
+    })
+    //.map(this.extractLoginData)\
+      .catch(this.handleError)
+      ;
+  }
 
-        return res.success;
+  // private extractData(res: Response) {
+  //   let body = res.json();
+  //   return body.data || {};
+  // }
+
+  logout(): void {
+    this.httpClient.post('/auth/signout', {}, this.getToken())
+      .catch(this.handleError)
+      .subscribe(response => {
+        this.token = null;
       });
   }
 
-  logout(): void {
-    this.loggedIn = false;
+  isLoggedIn(): boolean {
+    console.log('isLoggedIn:' + this.token);
+
+    return this.token ? true : false;
   }
 
-  isLoggedIn() {
-    console.log("isLoggedIn:" + this.loggedIn);
-    return this.loggedIn;
+  setToken(token: string): void {
+    this.token = token;
+  }
+
+  getToken(): string {
+    return this.token;
+  }
+
+  refreshToken(): Observable<Response> {
+    return this.http.post('/auth/token', {}, {})
+      .catch(this.handleError)
+      ;
+  }
+
+  getProfiles(): Observable<Profile[]> {
+    return this.httpClient.post('/auth/profiles', {}, this.getToken())
+      .catch(this.handleError)
+      .map(response => {
+        let profilesJson: Profile[] = response.json() as Profile[];
+
+        console.log(profilesJson);
+        return profilesJson;
+      })
+      ;
+  }
+
+  private handleError(error: Response | any) {
+    console.error('handleError: ' + error);
+    let errMsg: string;
+    if (error instanceof Response) {
+      //const body = error.json() || '';
+      //const err = body.error || JSON.stringify(body);
+      //errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+      errMsg = error.text();
+    } else {
+      errMsg = error.message ? error.message : error.toString();
+    }
+    console.error(errMsg);
+    return Observable.throw(errMsg);
   }
 }

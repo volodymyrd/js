@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {AuthService} from './auth.service';
@@ -19,14 +19,16 @@ import {User} from '../model/user';
         </div>
                 
         <button (click)="login()"  *ngIf="!authService.isLoggedIn()">Login</button>
-        <button (click)="logout()" *ngIf="authService.isLoggedIn()">Logout</button>
-    `
+    `,
 })
-export class LoginComponent {
-  message: string;
+export class LoginComponent implements OnInit {
+  private message: string;
   private user: User;
 
-  constructor(public authService: AuthService, public router: Router) {
+  ngOnInit(): void {
+  }
+
+  constructor(private authService: AuthService, private router: Router) {
     this.setMessage();
     this.user = new User();
   }
@@ -38,21 +40,21 @@ export class LoginComponent {
 
   login() {
     this.message = 'Trying to log in ...';
-    this.authService.login(this.user.userName, this.user.password).subscribe(() => {
-      this.setMessage();
-      if (this.authService.isLoggedIn) {
-        // Get the redirect URL from our auth service
-        // If no redirect has been set, use the default
-        let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/crisis-center/admin';
-        // Redirect the user
-        this.router.navigate([redirect]);
-      }
-    });
-  }
 
-  logout() {
-    console.log("logout");
-    this.authService.logout();
-    this.setMessage();
+    this.authService.login(this.user.userName, this.user.password)
+      .subscribe(response => {
+          console.log(response);
+          if (response.status === 200) {
+            this.setMessage();
+            this.authService.setToken(response.headers.get('TOKEN_ACCESS'));
+            // Get the redirect URL from our auth service
+            // If no redirect has been set, use the default
+            let redirect = this.authService.redirectUrl ? this.authService.redirectUrl : '/crisis-center/admin';
+            // Redirect the user
+            console.log("redirect: " + redirect);
+            this.router.navigate([redirect]);
+          }
+        },
+        error => this.message = <any>error);
   }
 }

@@ -22,7 +22,7 @@ dependencies {
 	compile project(":backend")
 	compile libs.javax
 	compile libs.spring_boot_web
-	//compile libs.liquibase
+	compile libs.liquibase
 
 	//compile libs.tomcat_embed
 

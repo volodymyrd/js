@@ -6,5 +6,6 @@ dependencies {
     compile libs.spring_boot_security
     compile libs.spring_boot_jpa
     compile libs.spring_boot_mail
-    compile libs.database_hsqldb
+    compile libs.database_mysql
+    compile libs.json
 }

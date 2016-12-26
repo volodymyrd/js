@@ -3,11 +3,12 @@ import {RouterModule, Routes} from '@angular/router';
 import {ProfileComponent} from './comps/profile.component';
 import {LoginComponent} from './comps/login.component';
 import {HomeComponent} from './comps/home.component';
+import {AuthGuard} from './comps/auth-guard.service';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'profile', component: ProfileComponent}
+  {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

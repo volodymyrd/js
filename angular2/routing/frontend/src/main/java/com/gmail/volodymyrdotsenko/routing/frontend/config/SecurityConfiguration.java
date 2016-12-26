@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.RememberMeAuthenticationProvider;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,8 +14,12 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import javax.sql.DataSource;
 
 /**
  * Configure Spring Security
@@ -24,10 +29,10 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    private String tokenKey = "some token goes here";
-
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     @Bean
@@ -41,10 +46,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public CustomTokenBasedRememberMeService tokenBasedRememberMeService() {
-        CustomTokenBasedRememberMeService service = new CustomTokenBasedRememberMeService(tokenKey, userDetailsService);
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+        db.setDataSource(dataSource);
+        return db;
+    }
+
+    @Bean
+    public AuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider ap = new DaoAuthenticationProvider();
+        ap.setUserDetailsService(userDetailsService);
+        ap.setPasswordEncoder(getPasswordEncoder());
+        return ap;
+    }
+
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(daoAuthenticationProvider());
+    }
+
+    @Bean
+    public CustomPersistentTokenBasedRememberMeServices tokenBasedRememberMeService() {
+        CustomPersistentTokenBasedRememberMeServices service =
+                new CustomPersistentTokenBasedRememberMeServices("qwqwqwqw", userDetailsService, persistentTokenRepository());
         service.setAlwaysRemember(true);
-        service.setCookieName("at");
         return service;
     }
 
@@ -54,15 +79,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    RememberMeAuthenticationProvider rememberMeAuthenticationProvider() {
-        return new RememberMeAuthenticationProvider(tokenKey);
-    }
-
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(rememberMeAuthenticationProvider());
-    }
-
     public BasicAuthenticationFilter basicAuthenticationFilter() throws Exception {
         BasicAuthenticationFilter filter = new BasicAuthenticationFilter(authenticationManagerBean());
         filter.setRememberMeServices(tokenBasedRememberMeService());
@@ -71,12 +87,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+                .csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/store").authenticated()
+                .antMatchers("/auth/*").authenticated()
                 .and()
                 .addFilter(basicAuthenticationFilter())
                 .addFilterBefore(rememberMeAuthenticationFilter(),
-                        BasicAuthenticationFilter.class);
+                        BasicAuthenticationFilter.class)
+        //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        //.and()
+        //.exceptionHandling().authenticationEntryPoint(new Http403ForbiddenEntryPoint())
+        //.logout()
+        //.rememberMe().tokenRepository(persistentTokenRepository()).tokenValiditySeconds(3600).key("qwqwqwqw")
+        // .rememberMeServices()
+        //.userDetailsService(userDetailsService)
+        ;
     }
 }

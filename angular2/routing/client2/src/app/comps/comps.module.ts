@@ -8,8 +8,8 @@ import {ProfileComponent} from './profile.component';
 
 import {AuthService} from './auth.service';
 import {HttpModule} from '@angular/http';
-
-
+import {AuthGuard} from './auth-guard.service';
+import {HttpClient} from './http-client';
 
 @NgModule({
   imports: [
@@ -22,7 +22,7 @@ import {HttpModule} from '@angular/http';
     LoginComponent,
     ProfileComponent,
   ],
-  providers: [AuthService]
+  providers: [AuthGuard, AuthService, HttpClient,]
 })
 export class CompsModule {
 

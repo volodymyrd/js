@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="1" author="Volodyr Dotsenko">
+        <comment>User initial data</comment>
+        <insert tableName="USR_USERS">
+            <column name="ID">1</column>
+            <column name="DATE_CREATE" valueDate="SYSDATE()"/>
+            <column name="DATE_UPDATE">NULL</column>
+            <column name="VERSION">0</column>
+            <column name="USER_NAME">admin@admin.com</column>
+            <column name="EMAIL">admin@admin.com</column>
+            <column name="PASSWORD">$2a$10$kNwNA91fp2IGqwOii1N4ge/tIz2Mw/IIiZowBjhtRHV4SeLITOnee</column>
+            <column name="FIRST_NAME">Admin</column>
+            <column name="LAST_NAME"></column>
+            <column name="EXPIRED" valueDate="9999-12-31 00:00:00"/>
+            <column name="PHONE"></column>
+            <column name="LOCKED" valueBoolean="false"/>
+            <column name="LAST_VISIT">NULL</column>
+            <column name="AGREED_WITH_TAC" valueBoolean="true"/>
+            <column name="STATUS">REGISTERED</column>
+        </insert>
+
+        <insert tableName="USR_ROLES">
+            <column name="ID">1</column>
+            <column name="DATE_CREATE" valueDate="SYSDATE()"/>
+            <column name="DATE_UPDATE">NULL</column>
+            <column name="VERSION">0</column>
+            <column name="NAME">ROLE_ADMIN</column>
+            <column name="DESCRIPTION">Role for administrator of system</column>
+        </insert>
+
+        <insert tableName="USR_ROLES">
+            <column name="ID">2</column>
+            <column name="DATE_CREATE" valueDate="SYSDATE()"/>
+            <column name="DATE_UPDATE">NULL</column>
+            <column name="VERSION">0</column>
+            <column name="NAME">ROLE_USER</column>
+            <column name="DESCRIPTION">Base role for all user'</column>
+        </insert>
+
+        <insert tableName="USR_USERS_ROLES">
+            <column name="REF_USER_ID">1</column>
+            <column name="REF_ROLE_ID">1</column>
+        </insert>
+
+        <insert tableName="USR_PROFILES">
+            <column name="ID">1</column>
+            <column name="REF_USER_ID">1</column>
+            <column name="DATE_CREATE" valueDate="SYSDATE()"/>
+            <column name="DATE_UPDATE">NULL</column>
+            <column name="VERSION">0</column>
+            <column name="NAME">DEFAULT</column>
+            <column name="DESCRIPTION">Default profile</column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
